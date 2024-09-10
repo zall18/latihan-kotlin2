@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.launch
 import okhttp3.Callback
 import org.json.JSONObject
+import retrofit2.Call
 
 class login : AppCompatActivity() {
 
@@ -35,7 +36,6 @@ class login : AppCompatActivity() {
         var first: EditText = findViewById(R.id.first_input)
         var password: EditText = findViewById(R.id.password_input)
         var login_user: AppCompatButton = findViewById(R.id.login_user)
-        var retrofitClient = RetrofitClient(this)
         db = UserDBHelper(this)
 
         login_user.setOnClickListener {
@@ -45,32 +45,53 @@ class login : AppCompatActivity() {
             }else if(password.text.length == 0){
                 password.setError("This field must not null")
             }else{
-                val requestQueue = Volley.newRequestQueue(applicationContext)
-                var stringRequest = object : StringRequest(Request.Method.POST, "https://fakestoreapi.com/auth/login", Response.Listener {
-                    response ->
-                    try {
-                        val jsonObject = JSONObject(response)
-                        Log.d("response", "onCreate: $jsonObject")
-                    }catch (e: Exception){
-                        e.printStackTrace()
-                    }
-                }, Response.ErrorListener {
-                    error -> error.printStackTrace()
-                }){
-                    override fun getBodyContentType(): String {
-                        return "application/x-www-form-urlencoded;charset=UTF-8"
+
+                var retrofitClient = RetrofitClient()
+                var apiService = retrofitClient.create(ApiServices::class.java)
+
+                var loginRequest = LoginRequest(first.text.toString(), password.text.toString())
+
+                apiService.loginUser(loginRequest).enqueue(object : retrofit2.Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: retrofit2.Response<LoginResponse>
+                    ) {
+                        val loginResponse = response.body()
+                        Log.d("response", "onResponse: $loginResponse")
                     }
 
-                    override fun getParams(): MutableMap<String, String>? {
-                        val param: MutableMap<String, String> = HashMap()
-                        param["username"] = first.text.toString()
-                        param["password"] = password.text.toString()
-                        return param
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Log.d("response", "onFailure: $t")
                     }
 
-                }
-                requestQueue.cache.clear();
-                requestQueue.add(stringRequest)
+                })
+
+//                val requestQueue = Volley.newRequestQueue(applicationContext)
+//                var stringRequest = object : StringRequest(Request.Method.POST, "https://fakestoreapi.com/auth/login", Response.Listener {
+//                    response ->
+//                    try {
+//                        val jsonObject = JSONObject(response)
+//                        Log.d("response", "onCreate: $jsonObject")
+//                    }catch (e: Exception){
+//                        e.printStackTrace()
+//                    }
+//                }, Response.ErrorListener {
+//                    error -> error.printStackTrace()
+//                }){
+//                    override fun getBodyContentType(): String {
+//                        return "application/x-www-form-urlencoded;charset=UTF-8"
+//                    }
+//
+//                    override fun getParams(): MutableMap<String, String>? {
+//                        val param: MutableMap<String, String> = HashMap()
+//                        param["username"] = first.text.toString()
+//                        param["password"] = password.text.toString()
+//                        return param
+//                    }
+//
+//                }
+//                requestQueue.cache.clear();
+//                requestQueue.add(stringRequest)
             }
 
         }
@@ -82,3 +103,8 @@ class login : AppCompatActivity() {
         }
     }
 }
+
+data class Login(
+    val username: String,
+    val password: String
+)

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".login">
+    tools:context=".signup">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:text="x"
                     android:textSize="30dp"
                     android:textColor="@color/white"
-                    android:id="@+id/signup_close"
+                    android:id="@+id/login_close"
                     />
 
             </LinearLayout>
@@ -59,11 +59,11 @@
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Buat Akun"
+            android:text="Masuk Ke X"
             android:textColor="@color/white"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="80dp"
             android:layout_marginBottom="30dp"
             />
 
@@ -71,55 +71,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/small_rounde_corner"
-            android:hint="Name"
+            android:hint="username or email"
             android:textColorHint="@color/gray"
             android:padding="20dp"
-            android:id="@+id/name_input"
             android:textColor="@color/white"
+            android:id="@+id/first_input"
             />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/small_rounde_corner"
-            android:hint="username"
+            android:hint="password"
             android:textColorHint="@color/gray"
             android:padding="20dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/username_input"
             android:textColor="@color/white"
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/small_rounde_corner"
-            android:hint="Email"
-            android:textColorHint="@color/gray"
-            android:padding="20dp"
             android:layout_marginTop="20dp"
-            android:id="@+id/email_input"
-            android:textColor="@color/white"
+            android:id="@+id/password_input"
             />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/small_rounde_corner"
-            android:hint="Password"
-            android:textColorHint="@color/gray"
-            android:padding="20dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/pass_input"
-            android:textColor="@color/white"
-            />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Daftar"
+            android:hint="Masuk"
             android:background="@drawable/rounded_corner"
             android:backgroundTint="@color/white"
             android:textColorHint="@color/black"
-            android:id="@+id/signup_user"
+            android:id="@+id/login_user"
             android:layout_marginTop="20dp"
             />
 
